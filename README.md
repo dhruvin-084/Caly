@@ -14,7 +14,7 @@ Caly is a C compiler being developed from scratch. It features a custom-built le
 
 1. Clone the repository:
     ```bash
-    git clone https://github.com/dhruvin-084/caly.git
+    git clone https://github.com/dhruvin-084/Caly.git
     cd Caly
     ```
 
