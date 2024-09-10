@@ -7,7 +7,7 @@ OBJDIR := build
 CXX := g++
 LINKER := g++
 INCDIRS := -I$(INCDIR)
-CXXFLAGS := -std=c++11 -Wall -Wextra
+CXXFLAGS := -std=c++11 -Wall -Wextra -g
 
 SRCFILES := $(wildcard $(SRCDIR)/*.cpp)
 OBJFILES := $(patsubst $(SRCDIR)/%.cpp,$(OBJDIR)/%.o,$(SRCFILES))
