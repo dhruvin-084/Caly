@@ -7,11 +7,14 @@ Token Lexer::gettok(){
     while(isspace(LastChar))
         LastChar = nextChar();
     
+
+    if(checkChar()) return Token::TOK_CHAR_LITERAL;
+    if(checkStr()) return Token::TOK_STRING_LITERAL;
+
     if(LastChar == '(') {
         LastChar = nextChar(); 
         return Token::TOK_LEFT_PAREN;
     }
-
     if(LastChar == ')') {
         LastChar = nextChar();
         return Token::TOK_RIGHT_PAREN;
@@ -96,6 +99,12 @@ KeyWord Lexer::getKeyWord(){
 Operator Lexer::getOperator(){
     return optr;
 }
+char Lexer::getCharVal(){
+    return charVal;
+}
+std::string Lexer::getStrVal(){
+    return strVal;
+}
 
 
 char Lexer::nextChar(){
@@ -152,3 +161,87 @@ Operator Lexer::checkOperator(){
     return Operator::OP_NONE;
 }
 
+
+bool Lexer::checkChar(){
+    if(LastChar == '\''){
+        LastChar = nextChar();
+        if(LastChar == '\\'){
+            LastChar = nextChar();
+            char c = convertEscapeToAscii(LastChar);
+            if(c != -1){
+                charVal = c;
+            }else{
+                //Error
+            }
+        }else{
+            charVal = LastChar;
+        }
+        
+        LastChar = nextChar();
+        
+        if(LastChar != '\''){
+            // Error
+        }
+        LastChar = nextChar();
+        return true;
+    }
+    return false;
+
+}
+
+bool Lexer::checkStr(){
+    if(LastChar == '\"'){
+        LastChar = nextChar();
+        while(LastChar != '\"'){
+            if(LastChar == '\\'){
+                LastChar = nextChar();
+                char c = convertEscapeToAscii(LastChar);
+                if(c != -1){
+                    strVal += c;
+                }else{
+                    //Error
+                }
+                
+            }else{
+                strVal += LastChar;
+            }
+            LastChar = nextChar();
+        }
+        LastChar = nextChar();
+        return true;
+    }
+    return false;
+}
+
+char Lexer::convertEscapeToAscii(char c){
+    switch (c)
+    {
+    case 'a':
+        return 0x07;
+    case 'b':
+        return 0x08;
+    case 'f':
+        return 0x0C;
+    case 'n':
+        return 0x0A;
+    case 'r':
+        return 0x0D;
+    case 't':
+        return 0x09;
+    case 'v':
+        return 0x0B;
+    case '\\':
+        return 0x5C;
+    case '\'':
+        return 0x27;
+    case '\"':
+        return 0x22;
+    case '\?':
+        return 0x3F;
+    case '0':
+        return 0x00;
+    default:
+        break;
+    }
+    return -1;
+}

@@ -36,11 +36,16 @@ public:
     std::string getIdentifierStr();
     KeyWord getKeyWord();
     Operator getOperator();
+    char getCharVal();
+    std::string getStrVal();
 
 private:
     char nextChar();
     KeyWord checkKeyWord();
     Operator checkOperator();
+    bool checkChar();
+    bool checkStr();
+    char convertEscapeToAscii(char c);
 
 
 private:
@@ -50,6 +55,8 @@ private:
     Operator optr;
     int intVal;
     float floatVal;
+    char charVal;
+    std::string strVal;
 
     std::string& srcStr;
     int idx;

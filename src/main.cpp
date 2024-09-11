@@ -56,6 +56,12 @@ void ProcessToken(Lexer& lex, Token tok){
     case Token::TOK_OPERATOR:
         std::cout << "TOK_OPERATOR : " << operatorstr[(int)lex.getOperator()] << std::endl;
         break;
+    case Token::TOK_CHAR_LITERAL:
+        std::cout << "TOK_CHAR_LITERAL : " << lex.getCharVal() << std::endl;
+        break;
+    case Token::TOK_STRING_LITERAL:
+        std::cout << "TOK_STRING_LITERAL : " << lex.getStrVal() << std::endl;
+        break;
     case Token::TOK_LEFT_BRACE:
         std::cout << "TOK_LEFT_BRACE" << std::endl;
         break;
